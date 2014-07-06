@@ -1,10 +1,10 @@
 console.log("arctic-script.js loaded...");
 
 //////////////////////////////////////////////////
-
 var columnNo; // No. of columns.
-var breakPoints = ["","","",""]	; // The breakpoints at which layout has to be redrawn.
-var blocks = [	// List of images to be loaded, should be replaced with containers later on.
+var breakPoints;// The breakpoints at which layout has to be redrawn.
+var blocks = new Array(100); // List of blocks
+var blocksURI = [	// List of images to be loaded, should be replaced with containers later on.
 	"http://1.bp.blogspot.com/-c7ejjuJqffA/UIeciE5uxaI/AAAAAAAAKC0/4hawiq5QWKM/s640/Keira+Knightley+Photos+3.jpg",
 	"http://4.bp.blogspot.com/-fnbgqsHBhr0/UCOmJYo-oNI/AAAAAAAABbU/zt6-obMm210/s1600/agnes+cecilee.jpg",
 	"http://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg/250px-Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg",
@@ -15,12 +15,21 @@ var blocks = [	// List of images to be loaded, should be replaced with container
 	"http://w8themes.com/wp-content/uploads/2014/03/Bird-Wallpaper-81.jpg",
 	"http://cdn.lamborghini.com/content/models/aventador_lp700-4/av_lp700-4_ov1_1920x1080.jpg",
 	"http://www.lightspacetime.com/wp-content/gallery/photography-2013-winners/hon-mention-harkins_2_photography_huntmarshscape.jpg",
-	"http://assets.vancitybuzz.com/wp-content/uploads/2014/01/hastings-better.jpg?89c18c"
+	"http://assets.vancitybuzz.com/wp-content/uploads/2014/01/hastings-better.jpg?89c18c"/*,
+	"http://www.hellomagazine.com/imagenes/profiles/keira-knightley/5718-keira-knightley.jpg",
+	"http://media.newindianexpress.com/keira_ap.jpg/2014/04/02/article2145177.ece/binary/original/keira_ap.jpg",
+	"http://upload.wikimedia.org/wikipedia/commons/d/d3/Keira_Knightley_at_BAFTA_Film_Awards_2008.jpg",
+	"http://cdn.filmschoolrejects.com/images/Keira-Knightley.jpg",
+	"http://imstars.aufeminin.com/stars/fan/keira-knightley/keira-knightley-20080117-364771.jpg",
+	"https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRTGQ_m9bJM_fOUt44OiN7yr1f2KxT8SQmIZBIt9Mxv26nBpKCtpg",
+	"http://imstars.aufeminin.com/stars/fan/keira-knightley/keira-knightley-20090113-484044.jpg",
+	"http://www.shortshairstyles.com/wp-content/uploads/2014/04/keira-knightley-short-hair.jpg",
+	"http://cinematicpassions.files.wordpress.com/2008/09/keira-knightley-1.jpg"*/
 ];
 
-function addBlock(src,column)
+function addBlock(block,column)
 {
-	document.getElementById("main").children[column].appendChild(createBlock(src));
+	document.getElementById("main").children[column].appendChild(block);
 }
 
 function createBlock(src)	
@@ -30,7 +39,7 @@ function createBlock(src)
 
 	var image = document.createElement("img")
 	image.setAttribute("src",src);
-	image.setAttribute("onload","this.parentNode.className += ' active';");
+	image.setAttribute("onload","this.parentNode.className += ' active'; loadS++;");
 	
 	newBlock.appendChild(image);
 
@@ -51,18 +60,68 @@ function getMinColumn()			// Getting the column with the min height
 	return (bottoms.indexOf(min));
 }
 
-function drawBlocks()
+function drawBlocks(columnNo)
 {
-
 	for( i=0 ; i<blocks.length ; i++)
 		addBlock(blocks[i],i%columnNo);
+}
+
+function loadBlocks()
+{
+	for( i=0 ; i<blocksURI.length ; i++)
+		blocks[i] = createBlock(blocksURI[i]);
+}
+
+function setColumnWidth(columnNo)
+{
+	for(i=0 ; i<columnNo ; i++)
+	{
+		document.getElementById("main").children[i].className = "column no"+columnNo;
+	}
 }
 
 function init()
 {
 	columnNo = 5;
-	drawBlocks();
+	setColumnWidth(columnNo);
+	loadBlocks();
+	drawBlocks(columnNo);
 }
+
+function resizeHandler()
+{
+	winWidth = window.innerWidth;
+
+	if(winWidth<500)
+	{	
+		columnNo = 1;		
+	}
+
+	else if(winWidth<700 && winWidth>500)
+	{	
+		columnNo = 2;		
+	}
+
+	else if(winWidth<1000 && winWidth>700)
+	{	
+		columnNo = 3;		
+	}
+
+	else if(winWidth<1200 && winWidth>850)
+	{	
+		columnNo = 4;		
+	}
+
+	else
+	{
+		columnNo = 5;
+	}
+
+	setColumnWidth(columnNo);
+	drawBlocks(columnNo);
+}
+
+window.addEventListener('resize',resizeHandler,true);
 
 // Initialize 
 init();

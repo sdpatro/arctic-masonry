@@ -25,10 +25,11 @@ body {
 	vertical-align: top;
 	width: 97%;
 
-	margin: 10px 0px 0px 0px;
+	margin-top: 2%;
 
 	position: relative;
-	top: 20px;
+	top: 15px;
+	left: -10px;
 
 	-webkit-transition: all 0.3s ease;
   	-moz-transition: all 0.3s ease;
@@ -36,15 +37,25 @@ body {
   	-o-transition: all 0.3s ease;
   	transition: all 0.3s ease;
 
+  	/*-ms-transform: skew(20deg,20deg); 
+    -webkit-transform: skew(20deg,0deg); 
+    transform: skew(20deg,20deg);
+*/
   	overflow:hidden;
 
-  	box-shadow: 3px 3px 4px #888888;
+  	z-index: 3;
+
+  	box-shadow: 1px 1px 6px #888888;
 }
 
 .active {
 	visibility: visible;
 	opacity: 1.0;
 	top: 0px;
+	left: 0px;
+/*	-ms-transform: skew(0deg,0deg); 
+    -webkit-transform: skew(0deg,0deg); 
+    transform: skew(0deg,0deg);*/
 }
 
 .block img {
@@ -54,8 +65,23 @@ body {
 }
 
 .column {
-	width: 20%;
 	display: inline-block;
 	vertical-align: top;
 	min-height: 20px;
+	width: 250px;
 }
+	.column.no5 {
+		width: 20%;
+	}
+	.column.no4 {
+		width: 25%;
+	} 
+	.column.no3 {
+		width: 33%;
+	} 
+	.column.no2 {
+		width: 50%;
+	} 
+	.column.no1 {
+		width: 100%;
+	} 
