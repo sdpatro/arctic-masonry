@@ -8,7 +8,7 @@ var blocksURI = [	// List of images to be loaded, should be replaced with contai
 	"http://1.bp.blogspot.com/-c7ejjuJqffA/UIeciE5uxaI/AAAAAAAAKC0/4hawiq5QWKM/s640/Keira+Knightley+Photos+3.jpg",
 	"http://4.bp.blogspot.com/-fnbgqsHBhr0/UCOmJYo-oNI/AAAAAAAABbU/zt6-obMm210/s1600/agnes+cecilee.jpg",
 	"http://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg/250px-Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg",
-	"http://upload.wikimedia.org/wikipedia/commons/b/bb/Willis_%28Sears%29_Tower_from_South_Loop.jpg",
+	"http://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Sears_Tower1.JPG/240px-Sears_Tower1.JPG",
 	"http://3.bp.blogspot.com/_3frbnPPxRYg/TNhCbrB-97I/AAAAAAAAATI/ZDszuGaaaDQ/s400/cappuccino2.jpg",
 	"http://images.nationalgeographic.com/wpf/media-live/photos/000/726/cache/eucalyptus-gold_72662_600x450.jpg",
 	"http://webneel.com/daily/sites/default/files/images/daily/06-2013/1-best-portrait-photography.preview.jpg",
@@ -39,7 +39,7 @@ function createBlock(src)
 
 	var image = document.createElement("img")
 	image.setAttribute("src",src);
-	image.setAttribute("onload","this.parentNode.className += ' active'; loadS++;");
+	image.setAttribute("onload","this.parentNode.className = 'block active';");
 	
 	newBlock.appendChild(image);
 
@@ -63,7 +63,11 @@ function getMinColumn()			// Getting the column with the min height
 function drawBlocks(columnNo)
 {
 	for( i=0 ; i<blocks.length ; i++)
+	{
+		if(blocks[i])
 		addBlock(blocks[i],i%columnNo);
+	}
+	
 }
 
 function loadBlocks()
@@ -80,44 +84,58 @@ function setColumnWidth(columnNo)
 	}
 }
 
-function init()
-{
-	columnNo = 5;
-	setColumnWidth(columnNo);
-	loadBlocks();
-	drawBlocks(columnNo);
-}
-
 function resizeHandler()
 {
-	winWidth = window.innerWidth;
+	var newColumnNo = getColumnNo();
 
-	if(winWidth<500)
+	if(newColumnNo!=columnNo)
+	{	columnNo = newColumnNo;
+		setColumnWidth(columnNo);
+
+		drawBlocks(columnNo);}
+}
+
+function getColumnNo()
+{
+	var calcColumnNo;
+	mainWidth = document.getElementById("main").offsetWidth;
+
+	if(mainWidth<400)
 	{	
-		columnNo = 1;		
+		calcColumnNo = 1;		
 	}
 
-	else if(winWidth<700 && winWidth>500)
+	else if(mainWidth<600 && mainWidth>400)
 	{	
-		columnNo = 2;		
+		calcColumnNo = 2;		
 	}
 
-	else if(winWidth<1000 && winWidth>700)
+	else if(mainWidth<900 && mainWidth>600)
 	{	
-		columnNo = 3;		
+		calcColumnNo = 3;		
 	}
 
-	else if(winWidth<1200 && winWidth>850)
+	else if(mainWidth<1100 && mainWidth>900)
 	{	
-		columnNo = 4;		
+		calcColumnNo = 4;		
+	}
+
+	else if(mainWidth<1600 && mainWidth>1100)
+	{
+		calcColumnNo = 5;
 	}
 
 	else
-	{
-		columnNo = 5;
-	}
+		calcColumnNo = 6;
 
+	return calcColumnNo;
+}
+
+function init()
+{
+	columnNo = getColumnNo();
 	setColumnWidth(columnNo);
+	loadBlocks();
 	drawBlocks(columnNo);
 }
 
@@ -125,11 +143,6 @@ window.addEventListener('resize',resizeHandler,true);
 
 // Initialize 
 init();
-
-// addBlock("http://images3.wikia.nocookie.net/__cb20080424154432/uncyclopedia/images/0/0c/Master_Chief_1.jpg",0);
-// addBlock("http://4.bp.blogspot.com/-fnbgqsHBhr0/UCOmJYo-oNI/AAAAAAAABbU/zt6-obMm210/s1600/agnes+cecilee.jpg",1);
-// addBlock("http://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg/250px-Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg",2);
-// addBlock("http://upload.wikimedia.org/wikipedia/commons/b/bb/Willis_%28Sears%29_Tower_from_South_Loop.jpg",3);
 
 
 

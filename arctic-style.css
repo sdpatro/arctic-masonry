@@ -16,8 +16,18 @@ body {
 
 #main {
 	margin: 0px 40px 0px 40px;
-	
+	-webkit-transition: all 0.1s ease;
+  	-moz-transition: all 0.1s ease;
+  	-ms-transition: all 0.1s ease;
+  	-o-transition: all 0.1s ease;
+  	transition: all 0.1s ease;
+
+	opacity: 0.0;
 }
+
+	#main.active {
+		opacity: 1.0;
+	}
 
 .block {
 	visibility: hidden;
@@ -70,6 +80,9 @@ body {
 	min-height: 20px;
 	width: 250px;
 }
+	.column.no6 {
+		width: 16.5%;
+	}
 	.column.no5 {
 		width: 20%;
 	}
@@ -84,4 +97,5 @@ body {
 	} 
 	.column.no1 {
 		width: 100%;
-	} 
+	}
+
