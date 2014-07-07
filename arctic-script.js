@@ -62,6 +62,12 @@ function getMinColumn()			// Getting the column with the min height
 
 function drawBlocks(columnNo)
 {
+	document.getElementById("main").style.display = "block";
+	
+	setTimeout(function() {
+		document.getElementById("main").className = "active";
+	},200)	;
+
 	for( i=0 ; i<blocks.length ; i++)
 	{
 		if(blocks[i])
@@ -88,10 +94,14 @@ function resizeHandler()
 {
 	var newColumnNo = getColumnNo();
 
+	console.log("Resized");
+
 	if(newColumnNo!=columnNo)
 	{	columnNo = newColumnNo;
 		setColumnWidth(columnNo);
 
+		document.getElementById("main").style.display = "none";
+		document.getElementById("main").className = "inactive";
 		drawBlocks(columnNo);}
 }
 
@@ -133,6 +143,7 @@ function getColumnNo()
 
 function init()
 {
+	console.log(document.getElementById("main").offsetWidth);
 	columnNo = getColumnNo();
 	setColumnWidth(columnNo);
 	loadBlocks();

@@ -16,17 +16,21 @@ body {
 
 #main {
 	margin: 0px 40px 0px 40px;
-	-webkit-transition: all 0.1s ease;
-  	-moz-transition: all 0.1s ease;
-  	-ms-transition: all 0.1s ease;
-  	-o-transition: all 0.1s ease;
-  	transition: all 0.1s ease;
+	-webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+  	position: relative;
+  	left: -20px;
 
 	opacity: 0.0;
 }
 
 	#main.active {
 		opacity: 1.0;
+		position: relative;
+		left: 0px;
 	}
 
 .block {
