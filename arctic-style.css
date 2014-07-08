@@ -16,34 +16,41 @@ body {
 
 #main {
 	margin: 0px 40px 0px 40px;
-	-webkit-transition: all 0.2s ease;
-  	-moz-transition: all 0.2s ease;
-  	-ms-transition: all 0.2s ease;
-  	-o-transition: all 0.2s ease;
-  	transition: all 0.2s ease;
-  	position: relative;
-  	left: -20px;
+
+	-webkit-transform: translateX(-20px);
+	-ms-transform: translateX(-20px);
+	-moz-transform: translateX(-20px);
+	transform: translateX(-20px);
+
+	-webkit-transition: all 0.15s ease;
+  	-moz-transition: all 0.15s ease;
+  	-ms-transition: all 0.15s ease;
+  	-o-transition: all 0.15s ease;
+  	transition: all 0.15s ease;
+  	
 
 	opacity: 0.0;
 }
 
 	#main.active {
 		opacity: 1.0;
-		position: relative;
-		left: 0px;
+		
+		-webkit-transform: translateX(0px);
+		-ms-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		transform: translateX(0px);
 	}
 
 .block {
 	visibility: hidden;
 	opacity: 0.0;
 	vertical-align: top;
-	width: 97%;
+	width: 100%;
 
-	margin-top: 2%;
-
-	position: relative;
-	top: 15px;
-	left: -10px;
+	-webkit-transform: translateX(-30px) translateY(30px) translateZ(0px) rotateX(-10deg) rotateY(-28deg) rotateZ(-2deg);
+	-ms-transform: translateX(-30px) translateY(30px) translateZ(0px) rotateX(-10deg) rotateY(-28deg) rotateZ(-2deg);
+	-moz-transform: translateX(-30px) translateY(30px) translateZ(0px) rotateX(-10deg) rotateY(-28deg) rotateZ(-2deg);
+	transform: translateX(-30px) translateY(30px) translateZ(0px) rotateX(-10deg) rotateY(-28deg) rotateZ(-2deg);
 
 	-webkit-transition: all 0.3s ease;
   	-moz-transition: all 0.3s ease;
@@ -51,10 +58,6 @@ body {
   	-o-transition: all 0.3s ease;
   	transition: all 0.3s ease;
 
-  	/*-ms-transform: skew(20deg,20deg); 
-    -webkit-transform: skew(20deg,0deg); 
-    transform: skew(20deg,20deg);
-*/
   	overflow:hidden;
 
   	z-index: 3;
@@ -65,11 +68,11 @@ body {
 .active {
 	visibility: visible;
 	opacity: 1.0;
-	top: 0px;
-	left: 0px;
-/*	-ms-transform: skew(0deg,0deg); 
-    -webkit-transform: skew(0deg,0deg); 
-    transform: skew(0deg,0deg);*/
+
+	-webkit-transform: translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+	-ms-transform: translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+	-moz-transform: translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+	transform: translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }
 
 .block img {
@@ -78,12 +81,33 @@ body {
 	display: block;
 }
 
+.container {
+	border: 1px solid #d0d0d0;
+	vertical-align: top;
+	margin-top: 2%;
+	width: 97%;
+	min-height: 100px;
+}
+
 .column {
 	display: inline-block;
 	vertical-align: top;
-	min-height: 20px;
+	min-height: 0px;
 	width: 250px;
+	margin: 0px auto 0px auto;
 }
+	.column.no10 {
+		width: 10%;
+	}
+	.column.no9 {
+		width: 11%;
+	} 
+	.column.no8 {
+		width: 12.4%;
+	} 
+	.column.no7 {
+		width: 14%;
+	} 
 	.column.no6 {
 		width: 16.5%;
 	}
@@ -100,6 +124,17 @@ body {
 		width: 50%;
 	} 
 	.column.no1 {
-		width: 100%;
+		width: 300px;
 	}
+
+#loader
+{
+	margin: 0px auto 0px auto;
+	background-color: #d0d0d0;
+	height: 5px;
+	width: 80%;
+	visibility: hidden;
+}
+
+
 
