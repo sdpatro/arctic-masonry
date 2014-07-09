@@ -3,8 +3,9 @@ console.log("arctic-script.js loaded...");
 //////////////////////////////////////////////////
 var columnNo; // No. of columns.
 var breakPoints;// The breakpoints at which layout has to be redrawn.
-var containers = new Array(100); // List of containers
-var blocksURI = [	// List of images to be loaded, should be replaced with containers later on.
+var containers = new Array(0); // List of containers
+var bufferContainers = new Array(12);
+var blocksURI = [	// List of images to be loaded, could be replaced with block JSONs to be loaded.
 	"http://4.bp.blogspot.com/-kmQNCBK0GWY/UNxCYzMxYVI/AAAAAAAARRw/9aWAYj3OesE/s400/NATALIE-PORTMAN-forbes.jpg",
 	"http://4.bp.blogspot.com/-fnbgqsHBhr0/UCOmJYo-oNI/AAAAAAAABbU/zt6-obMm210/s1600/agnes+cecilee.jpg",
 	"http://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg/250px-Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg",
@@ -17,9 +18,15 @@ var blocksURI = [	// List of images to be loaded, should be replaced with contai
 	"http://www.lightspacetime.com/wp-content/gallery/photography-2013-winners/hon-mention-harkins_2_photography_huntmarshscape.jpg",
 	"http://assets.vancitybuzz.com/wp-content/uploads/2014/01/hastings-better.jpg?89c18c",
 	"http://1.bp.blogspot.com/-c7ejjuJqffA/UIeciE5uxaI/AAAAAAAAKC0/4hawiq5QWKM/s640/Keira+Knightley+Photos+3.jpg",
-	"http://4.bp.blogspot.com/-fnbgqsHBhr0/UCOmJYo-oNI/AAAAAAAABbU/zt6-obMm210/s1600/agnes+cecilee.jpg",
-	"http://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg/250px-Reproduction-of-the-1805-Rembrandt-Peale-painting-of-Thomas-Jefferson-New-York-Historical-Society_1.jpg",
-	"http://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Sears_Tower1.JPG/240px-Sears_Tower1.JPG"
+	"http://images.nationalgeographic.com/wpf/media-live/photos/000/020/cache/yosemite-deep-valley_2013_600x450.jpg",
+	"http://37.media.tumblr.com/tumblr_l8mxxggfNP1qarjnpo1_500.jpg",
+	"http://images4.fanpop.com/image/photos/17200000/dr-house-sketch-hugh-laurie-17292026-400-400.jpg",
+	"http://i.kinja-img.com/gawker-media/image/upload/s--hYGR2VJo--/18ecr9f3invydjpg.jpg",
+	"http://news.ubc.ca/wp-content/uploads/2013/10/turtle-2-770.jpg",
+	"http://www.randomoriginal.com/wp-content/uploads/2010/10/magnifying-glass.jpg",
+	"http://static.squarespace.com/static/51b3dc8ee4b051b96ceb10de/t/52cb29aee4b09938944c6a24/1389046191657/microsoft-confirms-halo-5-is-coming-to-xbox-one-in-2014.jpg",
+	"http://www.horizontravelindia.com/wp-content/uploads/2011/09/Jammu-kashmir.jpg"
+
 ];
 
 function addContainer(container,column)
@@ -47,11 +54,11 @@ function createContainer(src)
 
 function getMinColumn()			// Getting the column with the min height
 {
-	var bottoms = [0,0,0,0];
+	var bottoms = new Array(0);
 
 	for( i=0 ; i<columnNo ; i++)
 	{
-		bottoms[i] = document.getElementById("main").children[i].getBoundingClientRect().bottom;
+		bottoms[i] = Math.ceil(document.getElementById("main").children[i].getBoundingClientRect().bottom);
 	}
 
 	var min=Math.min.apply(null,bottoms);
@@ -65,7 +72,7 @@ function drawContainers(columnNo)
 	
 	setTimeout(function() {
 		document.getElementById("main").className = "active";
-	},200);
+	},150);
 
 	for( i=0 ; i<containers.length ; i++)
 	{
@@ -74,10 +81,13 @@ function drawContainers(columnNo)
 	}	
 }
 
-function loadContainers()
+function loadContainers(blocksURI)
 {
-	for( i=0 ; i<blocksURI.length ; i++)
-		containers[i] = createContainer(blocksURI[i]);
+	var len = containers.length;
+
+	for( i=0 ; i<5 && containers.length<blocksURI.length ; i++)
+		containers[i+len] = createContainer(blocksURI[i+len]);
+
 }
 
 function setColumnWidth(columnNo)
@@ -95,9 +105,7 @@ function resizeHandler()
 	if(newColumnNo!=columnNo)
 	{	columnNo = newColumnNo;
 		setColumnWidth(columnNo);
-
-		document.getElementById("main").style.display = "none";
-		document.getElementById("main").className = "inactive";
+		document.getElementById("main").className = "";
 		setTimeout(function() {
 			drawContainers(columnNo);},100);
 	}
@@ -160,24 +168,18 @@ function getColumnNo()
 	return calcColumnNo;
 }
 
-function loadMore()
-{
-	
-}
-
 function init()
 {
-	console.log(document.getElementById("main").clientWidth);
 	columnNo = getColumnNo();
 	setColumnWidth(columnNo);
-	loadContainers();
+	loadContainers(blocksURI);
 	drawContainers(columnNo);
 }
 
 window.addEventListener('resize',resizeHandler,true);
 window.onkeypress = function loadMore() {
 	console.log("Load MOAR!");
-	loadContainers();
+	loadContainers(blocksURI);
 	drawContainers(columnNo);
 }
 
